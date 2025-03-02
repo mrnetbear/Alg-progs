@@ -1,4 +1,6 @@
 #include <iostream>
+#include <sstream>
+#include <string>
 #include <cstdio>
 #include <cctype>
 #include <cstdlib>
@@ -29,6 +31,30 @@ void append(Node** head_ref, const char new_data){
     
     last->next = new_node;
 }
-void createList(const char* str){
+
+//transform the string into the list
+Node* to_list(const std::string& str){
     Node* head = nullptr;
+    for (auto it : str){
+        append(&head, it);
+    }
+    return head;
+}
+
+void print_list(Node* head){
+    while (head != nullptr) {
+        std::cout << head->data;
+        head = head->next;
+    }
+    std::cout << std::endl;
+}
+
+int main(){
+    std::string line;
+
+    while (std::getline(std::cin, line)) {    
+        Node* crr_line = to_list(line);
+        print_list(crr_line);
+    }
+    return 0;
 }
