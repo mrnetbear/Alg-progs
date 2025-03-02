@@ -15,7 +15,7 @@ std::string binaryToHex(const std::string& binary) {
     }
     
     std::stringstream ss;
-    ss << std::hex << value; // traslate number inti hex
+    ss << std::hex << value; // traslate number into hex
     return ss.str();
 }
 
