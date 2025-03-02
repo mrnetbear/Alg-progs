@@ -28,5 +28,7 @@ void append(Node** head_ref, const char new_data){
         last = last->next;
     
     last->next = new_node;
-
+}
+void createList(const char* str){
+    Node* head = nullptr;
 }

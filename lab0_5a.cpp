@@ -19,6 +19,19 @@ std::string binaryToHex(const std::string& binary) {
     return ss.str();
 }
 
+template<typename T>
+void print_vector(const std::vector<T>& vec){
+    size_t i = 0;
+    for(const auto& value : vec){
+        if (i > 0) {
+            std::cout << " ";
+        }
+        std::cout << value;
+        ++i;
+    }
+    std::cout << std::endl;
+}
+
 int main() {
     std::string line;
 
@@ -35,15 +48,8 @@ int main() {
             }
         }
 
-        size_t i = 0;
-        for (auto a : hexNumbers) { //printing numbers
-            if (i > 0) {
-                std::cout << " ";
-            }
-            std::cout << a;
-            ++i; 
-        }
-        std::cout << std::endl;
+        
+        print_vector(hexNumbers);
     }
 
     return 0;
