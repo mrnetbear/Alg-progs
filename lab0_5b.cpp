@@ -41,6 +41,7 @@ Node* to_list(const std::string& str){
     return head;
 }
 
+//printing the list
 void print_list(Node* head){
     while (head != nullptr) {
         std::cout << head->data;
