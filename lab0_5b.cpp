@@ -56,7 +56,7 @@ void list_transform(Node* head, Node** evenHead, Node** oddHead){
     size_t i = 1;
     bool fIsDigit = false;
     Node* current = head;
-    std::cout << "busy... preparing loop..." << std::endl;
+    //std::cout << "busy... preparing loop..." << std::endl;
     while(current != nullptr){
         if(isdigit(current->data)){
             if (i % 2){
@@ -67,7 +67,7 @@ void list_transform(Node* head, Node** evenHead, Node** oddHead){
             }
             ++i;
             fIsDigit = true;
-            std::cout << "busy... digit found!" << std::endl;
+            //std::cout << "busy... digit found!" << std::endl;
 
         }
         else if (fIsDigit){
@@ -75,12 +75,12 @@ void list_transform(Node* head, Node** evenHead, Node** oddHead){
             append(oddHead, ' ');
             i = 1;
             fIsDigit = false;
-            std::cout << "busy... space found!" << std::endl;
+            //std::cout << "busy... space found!" << std::endl;
 
         }
         current = current->next; 
     }
-    std::cout << "busy... loop is done!" << std::endl;
+    //std::cout << "busy... loop is done!" << std::endl;
 }
 
 int main(){
