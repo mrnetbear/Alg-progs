@@ -17,12 +17,31 @@ void fillMatrix(size_t m, std::vector<size_t> &n, std::vector< std::vector<int> 
         matrix.push_back(buf);
     }
 }
+
+void printMatrix(const std::vector< std::vector<int> > &matrix){
+    std::cout << "----------Matrix----------" << std::endl;
+    for (const auto &row : matrix){
+        for (const auto &elem : row){
+            std::cout << elem << " ";
+        }
+        std::cout << std::endl;
+    }
+    std::cout << "--------------------" << std::endl;
+}
+
+void sortMatrix(std::vector< std::vector<int> > &matrix){
+    for (auto &row : matrix){
+        std::sort(row.begin(), row.end());
+    }
+}
 int main(){
 
     //recieving ammount of rows and columns
     size_t m;
     std::vector<size_t> n;
+    std::cout << "Enter amount of rows: " ;  //getting input data
     std::cin >> m; //reading ammount of rows
+    std::cout << "Enter amount of cols in each row: " ;  //getting input data
     if (std::cin.fail() || std::cin.eof() || (int)m < 0) //error checking
         return -1;
     for (size_t i = 0; i < m; ++i){ //reading ammount of columns
@@ -36,8 +55,12 @@ int main(){
     std::vector< std::vector<int> > matrix;
 
     fillMatrix(m, n, matrix);
+    printMatrix(matrix);
 
-    
+    sortMatrix(matrix);
+
+    std::cout << "Sorted Matrix:" << std::endl;
+    printMatrix(matrix);
 
     return 0;
 }
