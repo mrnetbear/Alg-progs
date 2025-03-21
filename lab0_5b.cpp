@@ -83,6 +83,16 @@ void list_transform(Node* head, Node** evenHead, Node** oddHead){
     //std::cout << "busy... loop is done!" << std::endl;
 }
 
+//memory free function
+void delete_list(Node* head) {
+    Node* tmp;
+    while (head != nullptr) {
+        tmp = head;
+        head = head->next;
+        delete tmp;
+    }
+}
+
 int main(){
     std::string line;
 
@@ -101,8 +111,15 @@ int main(){
             std::cout << std::endl;
         } catch (const std::invalid_argument& e) {
             std::cerr << e.what() << '\n';
+            delete_list(crr_line);
+            delete_list(evenHead);
+            delete_list(oddHead);
         }
         
+        delete_list(crr_line);
+        delete_list(evenHead);
+        delete_list(oddHead);
     }
+
     return 0;
 }
