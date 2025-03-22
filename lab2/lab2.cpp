@@ -19,7 +19,7 @@ bool evaluatePrefixExpression(const std::string &expression, Stack<std::string> 
             stack.push(t);
         else if (t == "!" || t == "&&" || t == "||"){
             if (stack.empty())
-                throw std::invalid_argument("Not enough operands");
+                throw std::invalid_argument("Not enough operands for operator " + t);
             if (t == "!"){
                 std::string operand = stack.top();
                 stack.pop();
