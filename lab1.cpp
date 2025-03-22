@@ -34,6 +34,30 @@ void sortMatrix(std::vector< std::vector<int> > &matrix){
         std::sort(row.begin(), row.end());
     }
 }
+void inverseMatrix(std::vector< std::vector<int> > &matrix){
+    for (auto &row : matrix){
+        for (auto &elem : row){
+            int tmp = 0;
+            bool fNegative = false;
+            if (elem < 0){
+                fNegative = true;
+                elem *= -1;
+            }
+            while (elem > 0){
+                tmp += elem % 10;
+                elem /= 10;
+                if (elem) tmp *= 10;
+            }
+            elem = fNegative ? -tmp : tmp;
+        }
+    }
+}
+
+int call (std::vector< std::vector<int> > &matrix, void (*f)(std::vector< std::vector<int> > &)){
+
+    std::cout << "call function..." << std::endl;
+    f(matrix);
+}
 int main(){
 
     //recieving ammount of rows and columns
@@ -54,12 +78,22 @@ int main(){
 
     std::vector< std::vector<int> > matrix;
 
+
     fillMatrix(m, n, matrix);
+
+
     printMatrix(matrix);
 
-    sortMatrix(matrix);
+    call(matrix, sortMatrix);
+    //sortMatrix(matrix);
+
 
     std::cout << "Sorted Matrix:" << std::endl;
+    printMatrix(matrix);
+
+    call(matrix, inverseMatrix);
+    //inverseMatrix(matrix);
+    std::cout << "Inversed Matrix:" << std::endl;
     printMatrix(matrix);
 
     return 0;
