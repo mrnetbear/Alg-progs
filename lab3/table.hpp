@@ -7,7 +7,7 @@
 typedef unsigned int UINT;
 
 const UINT HASH_TABLE_SIZE = 2048;
-const UINT MAX_STRING_LENGH = 1024;
+const UINT MAX_STRING_LENGTH = 1024;
 
 struct InfoType {
     char* str1;
@@ -70,13 +70,13 @@ private:
     int hash1(UINT key) const;
     int hash2(UINT key) const;
     int findInsertPosition(UINT key) const;
-    int findKeyPosition(UINT key) const;
+    
 
 public:
     Table(int msize1, int msize2 = HASH_TABLE_SIZE);
     ~Table();
     
-    
+    int findKeyPosition(UINT key) const;
     int addElement(const std::string& key1, const std::string& par, UINT key2, InfoType* info);
     Item* searchByCompositeKey(const std::string& key1, UINT key2) const;
     int deleteByCompositeKey(const std::string& key1, UINT key2);
@@ -88,6 +88,7 @@ public:
     
     // Операции с KeySpace2
     std::vector<Item*> searchByKey2(UINT key) const;
+    const KeySpace2* getKs2() const { return ks2; }
     int deleteByKey2(UINT key);
     std::vector<Item*> searchAllVersionsByKey2(UINT key) const;
     Item* searchVersionByKey2(UINT key, int release) const;

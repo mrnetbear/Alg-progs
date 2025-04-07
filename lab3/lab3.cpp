@@ -2,6 +2,9 @@
 #include <iostream>
 #include <cstring>
 
+//const UINT HASH_TABLE_SIZE = 2048;
+//const UINT MAX_STRING_LENGTH = 1024;
+
 void showMenu() {
     std::cout << "Menu:" << std::endl;
     std::cout << "1. Add element" << std::endl;
@@ -180,14 +183,12 @@ int main() {
                 std::vector<Item*> items = table.searchAllVersionsByKey2(key2);
                 if (!items.empty()) {
                     std::cout << "Found versions:" << std::endl;
-                    for (Item* item : items) {
-                        int ks2Index = item->ind2;
-                        Node2* node = table.searchByKey2(key2)[0]->info->ind2;
+                    int ks2Index = table.findKeyPosition(key2);
+                    if (ks2Index != -1) {
+                        Node2* node = table.getKs2()[ks2Index].node;
                         while (node != nullptr) {
-                            if (node->info == item->info) {
-                                std::cout << "  Release " << node->release << ": [" 
-                                         << node->info->str1 << ", " << node->info->str2 << "]" << std::endl;
-                            }
+                            std::cout << "  Release " << node->release << ": [" 
+                                     << node->info->str1 << ", " << node->info->str2 << "]" << std::endl;
                             node = node->next;
                         }
                     }
