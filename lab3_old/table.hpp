@@ -59,7 +59,7 @@ struct KeySpace2 {
 };
 
 class Table {
-private:
+protected:
     KeySpace1* ks1;
     KeySpace2* ks2;
     int msize1;
@@ -77,9 +77,9 @@ public:
     ~Table();
     
     int findKeyPosition(UINT key) const;
-    int addElement(const std::string& key1, const std::string& par, UINT key2, InfoType* info);
-    Item* searchByCompositeKey(const std::string& key1, UINT key2) const;
-    int deleteByCompositeKey(const std::string& key1, UINT key2);
+    virtual int addElement(const std::string& key1, const std::string& par, UINT key2, InfoType* info);
+    virtual Item* searchByCompositeKey(const std::string& key1, UINT key2) const;
+    virtual int deleteByCompositeKey(const std::string& key1, UINT key2);
     
     // Операции с KeySpace1
     std::vector<Item*> searchByKey1(const std::string& key) const;

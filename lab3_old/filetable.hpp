@@ -20,7 +20,7 @@ private:
     
     // Методы для работы с файлом
     long writeString(const char* str);
-    char* readString(long offset, int length);
+    char* readString(long offset);//, int length);
     long writeInfo(InfoType* info);
     InfoType* readInfo(long offset);
     
