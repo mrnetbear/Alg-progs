@@ -10,19 +10,21 @@ const UINT HASH_TABLE_SIZE = 2048;
 const UINT MAX_STRING_LENGTH = 1024;
 
 class InfoType {
-    private:
+private:
     std::string str1;
     std::string str2;
     
-    public:
+public:
     InfoType(){};
     InfoType(const std::string s1, const std::string s2);
+    std::string getStr1() const {return str1;};
+    std::string getStr2() const {return str2;};
     ~InfoType(){};
     std::string printInfo();
 };
 
 class Item {
-    private:
+private:
     InfoType* info;
     int release;
     Item* next;
@@ -32,7 +34,7 @@ class Item {
     int ind1;
     int ind2;
     
-    public:
+public:
     Item(InfoType* info, const std::string& key1, 
             UINT key2, int ind1, int ind2);
     Item(){};
@@ -40,21 +42,23 @@ class Item {
     void setInd1(int ind);
     void setInd2(int ind);
     void setNext(Item* newNext);
+    void setRelease(int newRelease);
     std::string getKey1();
     UINT getKey2();
     Item* getNext();
     InfoType* getInfo();
+    int getRelease();
     int getInd1();
     int getInd2();
 };
 
 class KeySpace1 {
-    private:
+private:
     std::string key;
     std::string par;
     Item* info;
 
-    public:
+public:
     KeySpace1();
     ~KeySpace1(){};
     void setValues(std::string newKey, std::string newPar, 
@@ -67,12 +71,12 @@ class KeySpace1 {
 };
 
 class Node2 {
-    private:
+private:
     int release;
     InfoType* info;
     Node2* next;
     
-    public:
+public:
     Node2(InfoType* info, Node2* next = nullptr);
     Node2(){};
     ~Node2(){};
@@ -84,12 +88,12 @@ class Node2 {
 };
 
 class KeySpace2 {
-    private:
+private:
     bool busy;
     UINT key;
     Node2* node;
     
-    public:
+public:
     KeySpace2();
     ~KeySpace2(){};
     bool isBusy();

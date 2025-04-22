@@ -28,6 +28,10 @@ void Item::setNext(Item* newNext){
     next = newNext;
 }
 
+void Item::setRelease(int newRelease){
+    release = newRelease;
+}
+
 std::string Item::getKey1(){
     return key1;
 }
@@ -42,6 +46,10 @@ Item* Item::getNext(){
 
 InfoType* Item::getInfo(){
     return info;
+}
+
+int Item::getRelease(){
+    return release;
 }
 
 int Item::getInd1(){
@@ -80,7 +88,7 @@ Item* KeySpace1::getInfo(){
     return info;
 } 
 
-
+//Реализация Node2 
 Node2::Node2(InfoType* info, Node2* next) : info(info), next(next) {
     release = 1;
 }
@@ -136,15 +144,15 @@ Table::~Table() {
     delete[] ks2;
 }
 
-int Table::hash1(unsigned int key) const {
+int Table::hash1(UINT key) const {
     return key % msize2;
 }
 
-int Table::hash2(unsigned int key) const {
+int Table::hash2(UINT key) const {
     return 1 + (key % (msize2 - 1));
 }
 
-int Table::findInsertPosition(unsigned int key) const {
+int Table::findInsertPosition(UINT key) const {
     int h1 = hash1(key);
     int h2 = hash2(key);
     
@@ -158,7 +166,7 @@ int Table::findInsertPosition(unsigned int key) const {
     return -1;
 }
 
-int Table::findKeyPosition(unsigned int key) const {
+int Table::findKeyPosition(UINT key) const {
     int h1 = hash1(key);
     int h2 = hash2(key);
     

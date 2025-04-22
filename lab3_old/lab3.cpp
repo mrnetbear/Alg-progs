@@ -45,9 +45,9 @@ int main() {
                 std::cin >> key2;
                 std::cin.ignore();
                 std::cout << "Enter first string: ";
-                std::cin.getline(str1, MAX_STRING_LENGTH);
+                std::cin >> str1;
                 std::cout << "Enter second string: ";
-                std::cin.getline(str2, MAX_STRING_LENGTH);
+                std::cin >> str2;
                 
                 InfoType* info = new InfoType(str1, str2);
                 if (table.addElement(key1, parent, key2, info) == 0) {
