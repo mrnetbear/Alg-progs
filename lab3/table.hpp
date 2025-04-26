@@ -9,15 +9,22 @@ typedef unsigned int UINT;
 const UINT HASH_TABLE_SIZE = 2048;
 const UINT MAX_STRING_LENGTH = 1024;
 
-struct InfoType {
-    char* str1;
-    char* str2;
+class InfoType {
+private:
+    std::string str1;
+    std::string str2;
     
-    InfoType(const char* s1, const char* s2);
-    ~InfoType();
+public:
+    InfoType(){};
+    InfoType(const std::string s1, const std::string s2);
+    std::string getStr1() const {return str1;};
+    std::string getStr2() const {return str2;};
+    ~InfoType(){};
+    std::string printInfo();
 };
 
-struct Item {
+class Item {
+private:
     InfoType* info;
     int release;
     Item* next;
@@ -27,39 +34,76 @@ struct Item {
     int ind1;
     int ind2;
     
-    Item(InfoType* info, const std::string& key1, UINT key2, int ind1, int ind2);
-    ~Item();
+public:
+    Item(InfoType* info, const std::string& key1, 
+            UINT key2, int ind1, int ind2);
+    Item(){};
+    ~Item(){};
+    void setInd1(int ind);
+    void setInd2(int ind);
+    void setNext(Item* newNext);
+    void setRelease(int newRelease);
+    std::string getKey1();
+    UINT getKey2();
+    Item* getNext();
+    InfoType* getInfo();
+    int getRelease();
+    int getInd1();
+    int getInd2();
 };
 
-struct KeySpace1 {
+class KeySpace1 {
+private:
     std::string key;
     std::string par;
     Item* info;
-    
+
+public:
     KeySpace1();
-    ~KeySpace1();
+    ~KeySpace1(){};
+    void setValues(std::string newKey, std::string newPar, 
+        Item* newInfo);
+    void setInfo(Item* newInfo);
+    void setPar(std::string newPar);
+    std::string getKey();
+    std::string getPar();
+    Item* getInfo();
 };
 
-struct Node2 {
+class Node2 {
+private:
     int release;
     InfoType* info;
     Node2* next;
     
+public:
     Node2(InfoType* info, Node2* next = nullptr);
-    ~Node2();
+    Node2(){};
+    ~Node2(){};
+    Node2* getNext();
+    InfoType* getInfo();
+    int getRelease();
+    void setNext(Node2* newNext);
+    void setRelease(int newRelease);
 };
 
-struct KeySpace2 {
+class KeySpace2 {
+private:
     bool busy;
     UINT key;
     Node2* node;
     
+public:
     KeySpace2();
-    ~KeySpace2();
+    ~KeySpace2(){};
+    bool isBusy();
+    UINT getKey();
+    Node2* getNode() const;
+    void setParameters(bool newBusy, UINT newKey, Node2* newNode);
 };
 
 class Table {
-private:
+protected:
     KeySpace1* ks1;
     KeySpace2* ks2;
     int msize1;
@@ -77,9 +121,9 @@ public:
     ~Table();
     
     int findKeyPosition(UINT key) const;
-    int addElement(const std::string& key1, const std::string& par, UINT key2, InfoType* info);
-    Item* searchByCompositeKey(const std::string& key1, UINT key2) const;
-    int deleteByCompositeKey(const std::string& key1, UINT key2);
+    virtual int addElement(const std::string& key1, const std::string& par, UINT key2, InfoType* info);
+    virtual Item* searchByCompositeKey(const std::string& key1, UINT key2) const;
+    virtual int deleteByCompositeKey(const std::string& key1, UINT key2);
     
     // Операции с KeySpace1
     std::vector<Item*> searchByKey1(const std::string& key) const;

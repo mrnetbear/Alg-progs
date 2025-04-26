@@ -45,9 +45,9 @@ int main() {
                 std::cin >> key2;
                 std::cin.ignore();
                 std::cout << "Enter first string: ";
-                std::cin.getline(str1, MAX_STRING_LENGTH);
+                std::cin >> str1;
                 std::cout << "Enter second string: ";
-                std::cin.getline(str2, MAX_STRING_LENGTH);
+                std::cin >> str2;
                 
                 InfoType* info = new InfoType(str1, str2);
                 if (table.addElement(key1, parent, key2, info) == 0) {
@@ -68,7 +68,7 @@ int main() {
                 
                 Item* item = table.searchByCompositeKey(key1, key2);
                 if (item != nullptr) {
-                    std::cout << "Found: [" << item->info->str1 << ", " << item->info->str2 << "]" << std::endl;
+                    std::cout << "Found: [" << item->getInfo()->printInfo() << "]" << std::endl;
                 } else {
                     std::cout << "Element not found" << std::endl;
                 }
@@ -101,7 +101,7 @@ int main() {
                 if (!items.empty()) {
                     std::cout << "Found elements:" << std::endl;
                     for (Item* item : items) {
-                        std::cout << "  [" << item->info->str1 << ", " << item->info->str2 << "]" << std::endl;
+                        std::cout << "  [" << item->getInfo()->printInfo() << "]" << std::endl;
                     }
                 } else {
                     std::cout << "No elements found with this key" << std::endl;
@@ -120,7 +120,7 @@ int main() {
                 if (!items.empty()) {
                     std::cout << "Found elements:" << std::endl;
                     for (Item* item : items) {
-                        std::cout << "  [" << item->info->str1 << ", " << item->info->str2 << "]" << std::endl;
+                        std::cout << "  [" << item->getInfo()->printInfo() << "]" << std::endl;
                     }
                 } else {
                     std::cout << "No elements found with this key" << std::endl;
@@ -163,7 +163,7 @@ int main() {
                 if (!items.empty()) {
                     std::cout << "Found elements:" << std::endl;
                     for (Item* item : items) {
-                        std::cout << "  [" << item->info->str1 << ", " << item->info->str2 << "]" << std::endl;
+                        std::cout << "  [" << item->getInfo()->printInfo() << "]" << std::endl;
                     }
                 } else {
                     std::cout << "No elements found with this parent key" << std::endl;
@@ -183,11 +183,11 @@ int main() {
                     std::cout << "Found versions:" << std::endl;
                     int ks2Index = table.findKeyPosition(key2);
                     if (ks2Index != -1) {
-                        Node2* node = table.getKs2()[ks2Index].node;
+                        Node2* node = table.getKs2()[ks2Index].getNode();
                         while (node != nullptr) {
-                            std::cout << "  Release " << node->release << ": [" 
-                                     << node->info->str1 << ", " << node->info->str2 << "]" << std::endl;
-                            node = node->next;
+                            std::cout << "  Release " << node->getRelease() << ": [" 
+                                     << node->getInfo()->printInfo() << "]" << std::endl;
+                            node = node->getNext();
                         }
                     }
                 } else {
@@ -208,7 +208,7 @@ int main() {
                 
                 Item* item = table.searchVersionByKey2(key2, release);
                 if (item != nullptr) {
-                    std::cout << "Found: [" << item->info->str1 << ", " << item->info->str2 << "]" << std::endl;
+                    std::cout << "Found: [" << item->getInfo()->printInfo() << "]" << std::endl;
                 } else {
                     std::cout << "Version not found" << std::endl;
                 }
