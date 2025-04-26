@@ -80,7 +80,7 @@ int main() {
                     unsigned int key2;
 
                     std::cout << "Enter KeySpace1 key: ";
-                    std::getline(std::cin, key1);
+                    std::cin >> key1;
                     std::cout << "Enter KeySpace2 key: ";
                     std::cin >> key2;
                     clearInputBuffer();
@@ -99,7 +99,7 @@ int main() {
                     unsigned int key2;
 
                     std::cout << "Enter KeySpace1 key: ";
-                    std::getline(std::cin, key1);
+                    std::cin >> key1;
                     std::cout << "Enter KeySpace2 key: ";
                     std::cin >> key2;
                     clearInputBuffer();
