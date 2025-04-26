@@ -1,17 +1,19 @@
 #ifndef FILETABLE_H
 #define FILETABLE_H
 
-#include "table.hpp"
 #include <fstream>
 #include <string>
+#include <vector>
 #include <cstring>
 
-class FileBackedTable : public Table {
+const unsigned int MAX_STRING_LENGTH = 1024;
+const unsigned int HASH_TABLE_SIZE = 2048;
+
+class FileBackedTable {
 private:
     std::string filename;
-    std::fstream file;
+    mutable std::fstream file;
 
-    // Структуры для хранения в файле
     struct FileHeader {
         int msize1;
         int msize2;
@@ -22,13 +24,13 @@ private:
     struct FileKeySpace1 {
         char key[MAX_STRING_LENGTH];
         char par[MAX_STRING_LENGTH];
-        long info_offset;  // Смещение к первому элементу в файле
+        long first_item_offset;
     };
 
     struct FileKeySpace2 {
         bool busy;
-        UINT key;
-        long node_offset;  // Смещение к первому узлу в файле
+        unsigned int key;
+        long first_node_offset;
     };
 
     struct FileItem {
@@ -36,7 +38,7 @@ private:
         int release;
         long next_offset;
         char key1[MAX_STRING_LENGTH];
-        UINT key2;
+        unsigned int key2;
         int ind1;
         int ind2;
     };
@@ -48,28 +50,52 @@ private:
     };
 
     struct FileInfo {
-        std::string str1;
-        std::string str2;
+        char str1[MAX_STRING_LENGTH];
+        char str2[MAX_STRING_LENGTH];
     };
 
+    // Метаданные
+    int msize1;
+    int msize2;
+    int csize1;
+    int csize2;
+
     // Вспомогательные методы
-    void writeInfo(long offset, const InfoType* info);
-    InfoType* readInfo(long offset);
-    long writeNewInfo(const InfoType* info);
-    void updateItem(Item* item, long offset);
-    Item* readItem(long offset);
-    Node2* readNode2(long offset);
+    long writeInfo(const std::string& str1, const std::string& str2);
+    void readInfo(long offset, std::string& str1, std::string& str2) const;
+    long allocateSpace(size_t size);
+    void updateHeader();
+    long findEmptyKs1Position() const;
+    long findKs1Position(const std::string& key) const;
+    long findKs2InsertPosition(unsigned int key) const;
+    long findKs2Position(unsigned int key) const;
+    void updateKs1At(long offset, const FileKeySpace1& ks1);
+    void updateKs2At(long offset, const FileKeySpace2& ks2);
+    void writeItemAt(long offset, const FileItem& item);
+    void writeNodeAt(long offset, const FileNode2& node);
 
 public:
     FileBackedTable(const std::string& filename, int msize1, int msize2 = HASH_TABLE_SIZE);
     ~FileBackedTable();
 
-    int addElement(const std::string& key1, const std::string& par, UINT key2, InfoType* info) override;
-    Item* searchByCompositeKey(const std::string& key1, UINT key2) const override;
-    int deleteByCompositeKey(const std::string& key1, UINT key2) override;
+    // Основные операции
+    int addElement(const std::string& key1, const std::string& par, unsigned int key2, 
+                  const std::string& infoStr1, const std::string& infoStr2);
+    bool searchByCompositeKey(const std::string& key1, unsigned int key2, 
+                            std::string& outStr1, std::string& outStr2) const;
+    int deleteByCompositeKey(const std::string& key1, unsigned int key2);
 
-    void loadFromFile();
-    void saveToFile();
+    // Поиск
+    std::vector<std::pair<std::string, std::string>> searchByKey1(const std::string& key) const;
+    std::vector<std::pair<std::string, std::string>> searchByKey2(unsigned int key) const;
+    std::vector<std::pair<std::string, std::string>> searchByParentKey(const std::string& parent) const;
+
+    // Удаление
+    int deleteByKey1(const std::string& key);
+    int deleteByKey2(unsigned int key);
+
+    // Вывод
+    void printTable() const;
 };
 
 #endif // FILETABLE_H

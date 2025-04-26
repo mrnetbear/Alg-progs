@@ -148,7 +148,7 @@ int Table::hash1(UINT key) const {
     return key % msize2;
 }
 
-int Table::hash2(UINT key) const {
+int Table::hash2(UINT key) const { //взять взаимопростое число с размером таблицы
     return 1 + (key % (msize2 - 1));
 }
 
@@ -184,7 +184,7 @@ int Table::findKeyPosition(UINT key) const {
 }
 
 int Table::addElement(const std::string& key1, const std::string& par, unsigned int key2, InfoType* info) {
-    // Проверка уникальности составного ключа
+    // Проверка уникальности составного ключа организовать по второму пространству ключей
     for (int i = 0; i < msize1; i++) {
         if (ks1[i].getKey() == key1) {
             Item* current = ks1[i].getInfo();
@@ -318,7 +318,7 @@ int Table::deleteByCompositeKey(const std::string& key1, unsigned int key2) {
             nodeToDelete = ks2[ks2Index].getNode();
             ks2[ks2Index].setParameters( false, 0, nodeToDelete->getNext());
             if (ks2[ks2Index].getNode() == nullptr) {
-                ks2[ks2Index].setParameters(false, 0, nullptr);
+                ks2[ks2Index].setParameters(false, 0, nullptr); //добавить флаг на то, что был дальше элемент
                 csize2--;
             }
         } else {
