@@ -283,7 +283,7 @@ Item* Table::searchByCompositeKey(const std::string& key1, unsigned int key2) co
     return nullptr;
 }
 
-int Table::deleteByCompositeKey(const std::string& key1, unsigned int key2) {
+/*int Table::deleteByCompositeKey(const std::string& key1, unsigned int key2) {
     Item* itemToDelete = searchByCompositeKey(key1, key2);
     if (itemToDelete == nullptr) {
         std::cout << "Error: Element not found" << std::endl;
@@ -341,6 +341,65 @@ int Table::deleteByCompositeKey(const std::string& key1, unsigned int key2) {
     itemToDelete->setNext(nullptr); // Чтобы не удалить цепочку
     delete itemToDelete;
     
+    return 0;
+}*/
+
+int Table::deleteByCompositeKey(const std::string& key1, unsigned int key2) {
+    Item* itemToDelete = searchByCompositeKey(key1, key2);
+    if (!itemToDelete) {
+        std::cout << "Error: Element not found" << std::endl;
+        return -1;
+    }
+
+    // Удаление из KeySpace1
+    int ks1Index = itemToDelete->getInd1();
+    if (ks1Index != -1) {
+        Item* current = ks1[ks1Index].getInfo();
+        if (current == itemToDelete) {
+            ks1[ks1Index].setInfo(current->getNext());
+        } else {
+            Item* prev = current;
+            while (prev->getNext() != itemToDelete) {
+                prev = prev->getNext();
+            }
+            prev->setNext(itemToDelete->getNext());
+        }
+
+        if (ks1[ks1Index].getInfo() == nullptr) {
+            ks1[ks1Index].setValues("", "", nullptr);
+            csize1--;
+        }
+    }
+
+    // Удаление из KeySpace2
+    int ks2Index = itemToDelete->getInd2();
+    if (ks2Index != -1) {
+        Node2* current = ks2[ks2Index].getNode();
+        Node2* prev = nullptr;
+
+        while (current && current->getInfo() != itemToDelete->getInfo()) {
+            prev = current;
+            current = current->getNext();
+        }
+
+        if (current) {
+            if (prev) {
+                prev->setNext(current->getNext());
+            } else {
+                ks2[ks2Index].setParameters(true, key2, current->getNext());
+            }
+
+            // Если это последняя версия, помечаем ячейку как свободную
+            if (ks2[ks2Index].getNode() == nullptr) {
+                ks2[ks2Index].setParameters(false, 0, nullptr);
+                csize2--;
+            }
+
+            delete current;
+        }
+    }
+
+    delete itemToDelete;
     return 0;
 }
 
@@ -438,7 +497,7 @@ std::vector<Item*> Table::searchByKey2(unsigned int key) const {
     return result;
 }
 
-int Table::deleteByKey2(unsigned int key) {
+/*int Table::deleteByKey2(unsigned int key) {
     int ks2Index = findKeyPosition(key);
     if (ks2Index == -1) {
         std::cout << "Error: Key not found in KeySpace2" << std::endl;
@@ -470,6 +529,50 @@ int Table::deleteByKey2(unsigned int key) {
     }
     
     ks2[ks2Index].setParameters(false, 0, nullptr);
+
+    return 0;
+}*/
+
+int Table::deleteByKey2(UINT key) {
+    int ks2Index = findKeyPosition(key);
+    if (ks2Index == -1) {
+        std::cout << "Error: Key not found in KeySpace2" << std::endl;
+        return -1;
+    }
+
+    // Удаляем все связанные элементы из KeySpace1
+    Node2* current = ks2[ks2Index].getNode();
+    while (current) {
+        InfoType* info = current->getInfo();
+        for (int i = 0; i < msize1; i++) {
+            if (ks1[i].getKey() != "") {
+                Item* item = ks1[i].getInfo();
+                Item* prev = nullptr;
+                while (item) {
+                    if (item->getInfo() == info) {
+                        Item* next = item->getNext();
+                        if (prev) {
+                            prev->setNext(next);
+                        } else {
+                            ks1[i].setInfo(next);
+                        }
+                        delete item;
+                        item = next;
+                    } else {
+                        prev = item;
+                        item = item->getNext();
+                    }
+                }
+            }
+        }
+        Node2* nextNode = current->getNext();
+        delete current;
+        current = nextNode;
+    }
+
+    // Помечаем ячейку как свободную
+    ks2[ks2Index].setParameters(false, 0, nullptr);
+    csize2--;
 
     return 0;
 }
