@@ -30,9 +30,14 @@ int main() {
     int msize1;
     std::cout << "Enter maximum size for KeySpace1: ";
     std::cin >> msize1;
+
+    int msize2;
+    std::cout << "Enter maximum size for KeySpace2: ";
+    std::cin >> msize2;
+    
     clearInputBuffer();
 
-    FileBackedTable table(filename, msize1);
+    FileBackedTable table(filename, msize1, msize2);
     std::cout << "Table initialized with file: " << filename << "\n";
 
     int choice;

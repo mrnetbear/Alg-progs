@@ -6,8 +6,8 @@
 #include <vector>
 #include <cstring>
 
-const unsigned int MAX_STRING_LENGTH = 1024;
-const unsigned int HASH_TABLE_SIZE = 2048;
+const unsigned int MAX_STRING_LENGTH = 10;
+//const unsigned int HASH_TABLE_SIZE = 2048;
 
 class FileBackedTable {
 private:
@@ -75,7 +75,7 @@ private:
     void writeNodeAt(long offset, const FileNode2& node);
 
 public:
-    FileBackedTable(const std::string& filename, int msize1, int msize2 = HASH_TABLE_SIZE);
+    FileBackedTable(const std::string& filename, int msize1, int msize2); //= HASH_TABLE_SIZE);
     ~FileBackedTable();
 
     // Основные операции

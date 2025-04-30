@@ -2,6 +2,7 @@
 #include <iostream>
 #include <algorithm>
 #include <cstring>
+#include <unistd.h>
 
 // Конструктор с инициализацией файла
 FileBackedTable::FileBackedTable(const std::string& filename, int msize1, int msize2) 
@@ -26,6 +27,7 @@ FileBackedTable::FileBackedTable(const std::string& filename, int msize1, int ms
         file.seekp(0);
         file.write(reinterpret_cast<const char*>(&header), sizeof(FileHeader));
         
+        std::cout << "Table created!\n" << "msize1 = " << msize1 << "; msize2 = " << msize2 << "; csize1 = " << csize1 << "; csize2 = " << csize2 << ";" << std::endl;
         // Инициализация KeySpace1
         FileKeySpace1 emptyKs1;
         memset(emptyKs1.key, 0, MAX_STRING_LENGTH);
@@ -53,10 +55,26 @@ FileBackedTable::FileBackedTable(const std::string& filename, int msize1, int ms
         file.seekg(0);
         file.read(reinterpret_cast<char*>(&header), sizeof(FileHeader));
         
-        msize1 = header.msize1;
-        msize2 = header.msize2;
-        csize1 = header.csize1;
-        csize2 = header.csize2;
+        this->msize1 = header.msize1;
+        this->msize2 = header.msize2;
+        this->csize1 = header.csize1;
+        this->csize2 = header.csize2;
+
+        std::cout << "Table Exists!\n" << "msize1 = " << this->msize1 << "; msize2 = " << this->msize2 << "; csize1 = " << csize1 << "; csize2 = " << csize2 << ";" << std::endl;
+
+        /*FileKeySpace1 exKs1;
+        for (int i = 0; i < msize1; i++) {
+            file.read(reinterpret_cast<char*>(&exKs1), sizeof(FileKeySpace1));
+        }
+
+        FileKeySpace2 exKs2;
+        for (int i = 0; i < msize2; i++) {
+            file.seekg(sizeof(FileHeader) + msize1 * sizeof(FileKeySpace1));
+            file.read(reinterpret_cast<char*>(&exKs2), sizeof(FileKeySpace2));
+        }
+
+        std::cout << "offsets: first_item_offset(ks1) = " << exKs1.first_item_offset << "; first_node_offset(ks2) = " << exKs2.first_node_offset << ";" << std::endl;*/
+        file.flush();
     }
 }
 
@@ -276,10 +294,12 @@ int FileBackedTable::addElement(const std::string& key1, const std::string& par,
         writeItemAt(new_item_offset, newItem);
     }
     
+    std::cout << "Added to ks1!" << std::endl;
     // Добавление в KeySpace2
     long ks2_pos = findKs2InsertPosition(key2);
     if (ks2_pos == -1) return -4; // Нет места
     
+    std::cout << "position found!" << std::endl;
     FileKeySpace2 ks2;
     file.seekg(ks2_pos);
     file.read(reinterpret_cast<char*>(&ks2), sizeof(FileKeySpace2));
@@ -319,6 +339,7 @@ int FileBackedTable::addElement(const std::string& key1, const std::string& par,
         newItem.ind2 = (ks2_pos - sizeof(FileHeader) - msize1 * sizeof(FileKeySpace1)) / sizeof(FileKeySpace2);
         writeNodeAt(last_node_offset, node);
         writeNodeAt(new_node_offset, newNode);
+        csize2++;
     }
     
     // Обновляем индексы в Item
@@ -654,14 +675,14 @@ int FileBackedTable::deleteByKey2(unsigned int key) {
 
 // Вывод содержимого таблицы
 void FileBackedTable::printTable() const {
-    std::cout << "=== KeySpace1 ===" << std::endl;
+    std::cout << "=== KeySpace1 === msize1 = " << msize1 << std::endl;
     for (long i = 0; i < msize1; i++) {
         FileKeySpace1 ks1;
         file.seekg(sizeof(FileHeader) + i * sizeof(FileKeySpace1));
         file.read(reinterpret_cast<char*>(&ks1), sizeof(FileKeySpace1));
 
         if (strlen(ks1.key) > 0) {
-            std::cout << "Key: " << ks1.key << ", Parent: " << ks1.par << std::endl;
+            std::cout << i << ". Key: " << ks1.key << ", Parent: " << ks1.par << std::endl;
             
             long item_offset = ks1.first_item_offset;
             while (item_offset != -1) {
@@ -675,6 +696,7 @@ void FileBackedTable::printTable() const {
                           << ", Info: [" << str1 << ", " << str2 << "]" << std::endl;
 
                 item_offset = item.next_offset;
+                sleep(1);
             }
         }
     }
@@ -700,6 +722,7 @@ void FileBackedTable::printTable() const {
                           << ": [" << str1 << ", " << str2 << "]" << std::endl;
 
                 node_offset = node.next_offset;
+                sleep(1);
             }
         }
     }
