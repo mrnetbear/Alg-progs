@@ -4,7 +4,8 @@
 #include <cctype>
 
 // Функция для вывода меню
-void printMenu() {
+void printMenu(bool state) {
+    std::cout << "allowDuplicates = " << state << std::endl;
     std::cout << "\nMenu:\n";
     std::cout << "1. Insert element\n";
     std::cout << "2. Remove element\n";
@@ -15,6 +16,11 @@ void printMenu() {
     std::cout << "7. Load from file\n";
     std::cout << "8. Clear tree\n";
     std::cout << "9. Exit\n";
+    std::cout << "10. Visualization\n";
+    if (!state)
+        std::cout << "0. AllowDuplicates\n";
+    else
+    std::cout << "0. DisableDuplicates\n";
     std::cout << "Enter your choice: ";
 }
 
@@ -46,7 +52,7 @@ int main() {
     bool allowDuplicates = false;
     
     do {
-        printMenu();
+        printMenu(allowDuplicates);
         choice = inputInt("");
         
         switch (choice) {
@@ -164,6 +170,22 @@ int main() {
             }
             case 9: { // Выход
                 std::cout << "Exiting...\n";
+                break;
+            }
+            case 10: { // Визуализация дерева
+                std::string dotFilename = inputString("Enter DOT filename (e.g., tree.dot): ");
+                std::string outputImageFilename = inputString("Enter output image filename (e.g., tree.png): ");
+                tree.visualize(dotFilename, outputImageFilename);
+                break;
+            }
+            case 0:{
+                if (!allowDuplicates){
+                    allowDuplicates = true;
+                    std::cout << "Duplicates enabled" << std::endl;
+                }else{
+                    allowDuplicates = false;
+                    std::cout << "Duplicates disabled" << std::endl;
+                }
                 break;
             }
             default: {

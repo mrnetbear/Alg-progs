@@ -1,6 +1,11 @@
 #ifndef BINTREE_H
 #define BINTREE_H
 
+#ifdef HAS_GRAPHVIZ
+void generateDotFile(const std::string& filename) const;
+void visualize(const std::string& dotFilename, const std::string& outputImageFilename);
+#endif
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -60,6 +65,10 @@ public:
     void clear();
     void printTree() const;
     bool loadFromFile(const std::string& filename, bool allowDuplicates = false);
+
+    //Визуализация
+    void generateDotFile(const std::string& filename) const;
+    void visualize(const std::string& dotFilename, const std::string& outputImageFilename);
 };
 
 

@@ -72,24 +72,10 @@ include CMakeFiles/lab4a.dir/flags.make
 CMakeFiles/lab4a.dir/codegen:
 .PHONY : CMakeFiles/lab4a.dir/codegen
 
-CMakeFiles/lab4a.dir/src/bintree.cpp.o: CMakeFiles/lab4a.dir/flags.make
-CMakeFiles/lab4a.dir/src/bintree.cpp.o: /Users/mcsquare/Documents/Alg-progs/lab4a/src/bintree.cpp
-CMakeFiles/lab4a.dir/src/bintree.cpp.o: CMakeFiles/lab4a.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/mcsquare/Documents/Alg-progs/lab4a/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/lab4a.dir/src/bintree.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/lab4a.dir/src/bintree.cpp.o -MF CMakeFiles/lab4a.dir/src/bintree.cpp.o.d -o CMakeFiles/lab4a.dir/src/bintree.cpp.o -c /Users/mcsquare/Documents/Alg-progs/lab4a/src/bintree.cpp
-
-CMakeFiles/lab4a.dir/src/bintree.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/lab4a.dir/src/bintree.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/mcsquare/Documents/Alg-progs/lab4a/src/bintree.cpp > CMakeFiles/lab4a.dir/src/bintree.cpp.i
-
-CMakeFiles/lab4a.dir/src/bintree.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/lab4a.dir/src/bintree.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/mcsquare/Documents/Alg-progs/lab4a/src/bintree.cpp -o CMakeFiles/lab4a.dir/src/bintree.cpp.s
-
 CMakeFiles/lab4a.dir/src/lab4a.cpp.o: CMakeFiles/lab4a.dir/flags.make
 CMakeFiles/lab4a.dir/src/lab4a.cpp.o: /Users/mcsquare/Documents/Alg-progs/lab4a/src/lab4a.cpp
 CMakeFiles/lab4a.dir/src/lab4a.cpp.o: CMakeFiles/lab4a.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/mcsquare/Documents/Alg-progs/lab4a/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/lab4a.dir/src/lab4a.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/mcsquare/Documents/Alg-progs/lab4a/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/lab4a.dir/src/lab4a.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/lab4a.dir/src/lab4a.cpp.o -MF CMakeFiles/lab4a.dir/src/lab4a.cpp.o.d -o CMakeFiles/lab4a.dir/src/lab4a.cpp.o -c /Users/mcsquare/Documents/Alg-progs/lab4a/src/lab4a.cpp
 
 CMakeFiles/lab4a.dir/src/lab4a.cpp.i: cmake_force
@@ -100,16 +86,30 @@ CMakeFiles/lab4a.dir/src/lab4a.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/lab4a.dir/src/lab4a.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/mcsquare/Documents/Alg-progs/lab4a/src/lab4a.cpp -o CMakeFiles/lab4a.dir/src/lab4a.cpp.s
 
+CMakeFiles/lab4a.dir/src/bintree.cpp.o: CMakeFiles/lab4a.dir/flags.make
+CMakeFiles/lab4a.dir/src/bintree.cpp.o: /Users/mcsquare/Documents/Alg-progs/lab4a/src/bintree.cpp
+CMakeFiles/lab4a.dir/src/bintree.cpp.o: CMakeFiles/lab4a.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/mcsquare/Documents/Alg-progs/lab4a/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/lab4a.dir/src/bintree.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/lab4a.dir/src/bintree.cpp.o -MF CMakeFiles/lab4a.dir/src/bintree.cpp.o.d -o CMakeFiles/lab4a.dir/src/bintree.cpp.o -c /Users/mcsquare/Documents/Alg-progs/lab4a/src/bintree.cpp
+
+CMakeFiles/lab4a.dir/src/bintree.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/lab4a.dir/src/bintree.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/mcsquare/Documents/Alg-progs/lab4a/src/bintree.cpp > CMakeFiles/lab4a.dir/src/bintree.cpp.i
+
+CMakeFiles/lab4a.dir/src/bintree.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/lab4a.dir/src/bintree.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/mcsquare/Documents/Alg-progs/lab4a/src/bintree.cpp -o CMakeFiles/lab4a.dir/src/bintree.cpp.s
+
 # Object files for target lab4a
 lab4a_OBJECTS = \
-"CMakeFiles/lab4a.dir/src/bintree.cpp.o" \
-"CMakeFiles/lab4a.dir/src/lab4a.cpp.o"
+"CMakeFiles/lab4a.dir/src/lab4a.cpp.o" \
+"CMakeFiles/lab4a.dir/src/bintree.cpp.o"
 
 # External object files for target lab4a
 lab4a_EXTERNAL_OBJECTS =
 
-lab4a: CMakeFiles/lab4a.dir/src/bintree.cpp.o
 lab4a: CMakeFiles/lab4a.dir/src/lab4a.cpp.o
+lab4a: CMakeFiles/lab4a.dir/src/bintree.cpp.o
 lab4a: CMakeFiles/lab4a.dir/build.make
 lab4a: CMakeFiles/lab4a.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/mcsquare/Documents/Alg-progs/lab4a/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable lab4a"

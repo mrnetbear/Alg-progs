@@ -229,3 +229,59 @@ bool BSTree::loadFromFile(const std::string& filename, bool allowDuplicates) {
     file.close();
     return true;
 }
+
+//Генерация файла для визуализации
+void BSTree::generateDotFile(const std::string& filename) const {
+    std::ofstream dotFile(filename);
+    if (!dotFile.is_open()) {
+        std::cerr << "Error opening DOT file for writing.\n";
+        return;
+    }
+
+    dotFile << "digraph BSTree {\n";
+    dotFile << "  node [shape=record, height=0.1];\n";
+
+    // Рекурсивная функция для обхода дерева
+    std::function<void(TreeNode*)> traverse = [&](TreeNode* node) {
+        if (!node) return;
+
+        // Уникальный идентификатор узла
+        std::string nodeId = "node" + std::to_string(reinterpret_cast<uintptr_t>(node));
+
+        // Запись узла
+        dotFile << "  " << nodeId << " [label=\"<left> | <key> " << node->key << " (" << node->infoList.size() << ") | <right> \"];\n";
+
+        // Рекурсивный обход левого поддерева
+        if (node->left) {
+            std::string leftId = "node" + std::to_string(reinterpret_cast<uintptr_t>(node->left));
+            dotFile << "  " << nodeId << ":left -> " << leftId << ":key;\n";
+            traverse(node->left);
+        }
+
+        // Рекурсивный обход правого поддерева
+        if (node->right) {
+            std::string rightId = "node" + std::to_string(reinterpret_cast<uintptr_t>(node->right));
+            dotFile << "  " << nodeId << ":right -> " << rightId << ":key;\n";
+            traverse(node->right);
+        }
+    };
+
+    traverse(root);
+    dotFile << "}\n";
+    dotFile.close();
+}
+
+//Визуализация дерева
+void BSTree::visualize(const std::string& dotFilename, const std::string& outputImageFilename) {
+    generateDotFile(dotFilename);
+
+    // Вызов Graphviz для генерации изображения
+    std::string command = "dot -Tpng " + dotFilename + " -o " + outputImageFilename;
+    int result = system(command.c_str());
+
+    if (result != 0) {
+        std::cerr << "Error generating tree visualization. Ensure Graphviz is installed.\n";
+    } else {
+        std::cout << "Tree visualization saved to " << outputImageFilename << "\n";
+    }
+}
