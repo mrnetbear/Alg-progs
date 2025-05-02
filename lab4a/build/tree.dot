@@ -1,16 +1,6 @@
 digraph BSTree {
   node [shape=record, height=0.1];
-  node140566837878592 [label="<left> | <key> d (2) | <right> "];
-  node140566837878592:left -> node140566847307936:key;
-  node140566847307936 [label="<left> | <key> b (1) | <right> "];
-  node140566847307936:left -> node140566837877904:key;
-  node140566837877904 [label="<left> | <key> a (1) | <right> "];
-  node140566847307936:right -> node140566837878016:key;
-  node140566837878016 [label="<left> | <key> c (1) | <right> "];
-  node140566837878592:right -> node140566853599392:key;
-  node140566853599392 [label="<left> | <key> f (1) | <right> "];
-  node140566853599392:left -> node140566847308048:key;
-  node140566847308048 [label="<left> | <key> e (1) | <right> "];
-  node140566853599392:right -> node140566850453728:key;
-  node140566850453728 [label="<left> | <key> g (1) | <right> "];
+  node140659499483296 [label="<left> | <key> c (1) | <right> "];
+  node140659499483296:left -> node140659500531872:key;
+  node140659500531872 [label="<left> | <key> a (1) | <right> "];
 }

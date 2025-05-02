@@ -72,17 +72,30 @@ TreeNode* BSTree::removeHelper(TreeNode* node, const std::string& key, int index
                 delete node;
                 return leftChild;
             } else {
-                // У узла есть оба поддерева - находим минимальный в правом поддереве
+                // У узла есть оба поддерева
                 TreeNode* minRight = node->right;
+                TreeNode* parent = node;
+                bool isLeft = false;
+                
                 while (minRight->left) {
+                    parent = minRight;
                     minRight = minRight->left;
+                    isLeft = true;
                 }
+                
                 // Копируем данные
                 node->key = minRight->key;
                 node->infoList = minRight->infoList;
-                minRight->infoList.clear(); // Чтобы не удалилась информация
-                // Удаляем минимальный узел
-                node->right = removeHelper(node->right, minRight->key, 0, found);
+                
+                // Удаляем minRight
+                if (isLeft) {
+                    parent->left = minRight->right;
+                } else {
+                    parent->right = minRight->right;
+                }
+                
+                minRight->infoList.clear(); // Защита от двойного удаления
+                delete minRight;
             }
         }
     }
