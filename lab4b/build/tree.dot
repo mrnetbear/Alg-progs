@@ -1,0 +1,34 @@
+digraph LLRBTree {
+  node [shape=circle, fontname="Arial"];
+  edge [arrowhead=normal];
+
+  20 [label="20\n1,1", style=filled, fillcolor=black, fontcolor=white];
+  20 -> 5 [label="L"];
+  20 -> 30 [label="R"];
+  5 [label="5\n1,1", style=filled, fillcolor=black, fontcolor=white];
+  5 -> 4 [label="L"];
+  5 -> 11 [label="R"];
+  30 [label="30\n1,1", style=filled, fillcolor=black, fontcolor=white];
+  30 -> 29 [label="L"];
+  30 -> 31 [label="R"];
+  4 [label="4\n1,1", style=filled, fillcolor=black, fontcolor=white];
+  null4L [shape=point];
+  4 -> null4L [color=gray];
+  null4R [shape=point];
+  4 -> null4R [color=gray];
+  11 [label="11\n1,1", style=filled, fillcolor=black, fontcolor=white];
+  null11L [shape=point];
+  11 -> null11L [color=gray];
+  null11R [shape=point];
+  11 -> null11R [color=gray];
+  29 [label="29\n1,1", style=filled, fillcolor=black, fontcolor=white];
+  null29L [shape=point];
+  29 -> null29L [color=gray];
+  null29R [shape=point];
+  29 -> null29R [color=gray];
+  31 [label="31\n1,1", style=filled, fillcolor=black, fontcolor=white];
+  null31L [shape=point];
+  31 -> null31L [color=gray];
+  null31R [shape=point];
+  31 -> null31R [color=gray];
+}
