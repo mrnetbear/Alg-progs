@@ -1,6 +1,16 @@
 digraph BSTree {
   node [shape=record, height=0.1];
-  node140659499483296 [label="<left> | <key> c (1) | <right> "];
-  node140659499483296:left -> node140659500531872:key;
-  node140659500531872 [label="<left> | <key> a (1) | <right> "];
+  node140306993397920 [label="<left> | <key> banana (2) | <right> "];
+  node140306993397920:left -> node140306983968704:key;
+  node140306983968704 [label="<left> | <key> apple (1) | <right> "];
+  node140306993397920:right -> node140306983967984:key;
+  node140306983967984 [label="<left> | <key> cherry (1) | <right> "];
+  node140306983967984:right -> node140306997592224:key;
+  node140306997592224 [label="<left> | <key> elderberry (1) | <right> "];
+  node140306997592224:left -> node140307000738000:key;
+  node140307000738000 [label="<left> | <key> climentine (1) | <right> "];
+  node140306997592224:right -> node140306998640800:key;
+  node140306998640800 [label="<left> | <key> grape (1) | <right> "];
+  node140306998640800:left -> node140306995495168:key;
+  node140306995495168 [label="<left> | <key> fruit (1) | <right> "];
 }

@@ -15,7 +15,7 @@ bool BSTree::insert(const std::string& key, int num1, int num2, const std::strin
     }
 }
 
-// Рекурсивная функция вставки
+// Рекурсивная функция вставки ПОДПРАВИТЬ НА ЦИКЛ
 TreeNode* BSTree::insertHelper(TreeNode* node, const std::string& key, Info* info, bool allowDuplicates) {
     if (!node) {
         return new TreeNode(key, info);
