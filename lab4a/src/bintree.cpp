@@ -7,7 +7,32 @@
 bool BSTree::insert(const std::string& key, int num1, int num2, const std::string& text, bool allowDuplicates) {
     Info* newInfo = new Info(num1, num2, text);
     try {
-        root = insertHelper(root, key, newInfo, allowDuplicates);
+        //root = insertHelper(root, key, newInfo, allowDuplicates);
+        TreeNode* current = root;
+        TreeNode* prev = current;
+        if (!current)
+            root = new TreeNode(key, newInfo);
+        while (current){
+            prev = current;
+            if (key < current->key){
+                current = current->left;
+                if(!current)
+                   prev -> left = new TreeNode(key, newInfo);
+            }
+            else if (key > current->key){
+                current = current->right;
+                if (!current) 
+                    prev->right = new TreeNode(key, newInfo);
+            }
+            else {
+                // Ключ уже существует
+                if (!allowDuplicates) {
+                    throw std::runtime_error("Duplicate key not allowed");
+                }
+                current->infoList.push_back(newInfo);
+            }
+        }
+        
         return true;
     } catch (const std::runtime_error& e) {
         delete newInfo;
@@ -38,7 +63,73 @@ TreeNode* BSTree::insertHelper(TreeNode* node, const std::string& key, Info* inf
 // Удаление элемента по ключу и индексу
 bool BSTree::remove(const std::string& key, int index) {
     bool found = false;
-    root = removeHelper(root, key, index, found);
+    //root = removeHelper(root, key, index, found);
+    if (!root || index < 0) return found;
+
+    TreeNode* current = root;
+    TreeNode* prev = current;
+    bool prevSide = false;
+
+    while (current) {
+        prev = current;
+        if (key < current -> key){
+            current = current->left;
+            if (!current) break;
+            prevSide = false;
+        }
+        else if (key > current-> key){
+            current = current->right;
+            if (!current) break;
+            prevSide = true;
+        }
+        else{
+            found = true;
+            // Удаляем информацию по индексу
+            delete current->infoList[index];
+            current->infoList.erase(current->infoList.begin() + index);
+            
+            // Если больше информации нет, удаляем узел
+            if (current->infoList.empty()) {
+                if (!current->left) {
+                    //TreeNode* rightChild = current->right;
+                    if(prevSide) prev->right = current->right;
+                    else prev->left = current->right;
+                    delete current;
+                } else if (!current->right) {
+                    if(prevSide) prev->right = current->left;
+                    else prev->left = current->left;
+                    delete current;
+                } else {
+                    // У узла есть оба поддерева
+                    TreeNode* minRight = current->right;
+                    TreeNode* parent = current;
+                    bool isLeft = false;
+                    
+                    while (minRight->left) {
+                        parent = minRight;
+                        minRight = minRight->left;
+                        isLeft = true;
+                    }
+                    
+                    // Копируем данные
+                    current->key = minRight->key;
+                    current->infoList = minRight->infoList;
+                    
+                    // Удаляем minRight
+                    if (isLeft) {
+                        parent->left = minRight->right;
+                    } else {
+                        parent->right = minRight->right;
+                    }
+                    
+                    minRight->infoList.clear(); // Защита от двойного удаления
+                    delete minRight;
+                }
+            }
+        }
+        
+    }
+
     return found;
 }
 
