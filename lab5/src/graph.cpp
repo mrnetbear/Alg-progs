@@ -16,11 +16,11 @@
 #include <cstdlib>
 
 
-double Vertex::distanceTo(const Vertex& other) const {
+/*double Vertex::distanceTo(const Vertex& other) const {
         double dx = x - other.x;
         double dy = y - other.y;
         return sqrt(dx*dx + dy*dy);
-    }
+}*/
 
 
 bool Graph::vertexExists(const std::string& name) const {
@@ -286,7 +286,7 @@ bool Graph::edgeExists(const std::string& from, const std::string& to) const {
         return {path, dist[target]};
     }
 
-    // Check if graph is acyclic using DFS - O(V + E)
+    // Check if graph is acyclic - O(V + E)
     bool Graph::isAcyclic() {
         std::unordered_map<std::string, bool> visited;
         std::unordered_map<std::string, bool> recursionStack;
@@ -305,7 +305,7 @@ bool Graph::edgeExists(const std::string& from, const std::string& to) const {
         return true;
     }
 
-    // Topological sort using DFS - O(V + E)
+    // Topological sort - O(V + E)
     std::vector<std::string> Graph::topologicalSort() {
         std::vector<std::string> result;
         if (!isAcyclic()) {

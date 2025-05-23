@@ -24,7 +24,7 @@ public:
     Vertex() : name(""), x(0), y(0) {}
     Vertex(std::string n, double x_coord, double y_coord) : name(n), x(x_coord), y(y_coord) {}
 
-    double distanceTo(const Vertex& other) const;
+    //double distanceTo(const Vertex& other) const;
 };
 
 class Graph {
