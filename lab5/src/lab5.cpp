@@ -68,13 +68,11 @@ int main() {
                 std::cin >> from;
                 std::cout << "Enter target vertex: ";
                 std::cin >> to;
-                std::cout << "Enter edge weight (or -1 to calculate distance): ";
+                std::cout << "Enter edge weight: ";
                 std::cin >> weight;
-                if (weight == -1) {
-                    // Calculate weight as distance between vertices
-                    // (This would require access to vertex coordinates, which we can't do directly)
+                while (weight < 0) {
                     std::cout << "This feature requires modification to the Graph class.\n";
-                    std::cout << "Enter weight manually: ";
+                    std::cout << "Enter weight positive: ";
                     std::cin >> weight;
                 }
                 if (graph.addEdge(from, to, weight)) {
