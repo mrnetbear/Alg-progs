@@ -1,20 +1,19 @@
 #include <iostream>
 #include "connectedSets.hpp"
 
-using namespace std;
 
 void printSets(const ConnectedSetsList& setsList) {
-    cout << "Total sets: " << setsList.count() << endl;
+    std::cout << "Total sets: " << setsList.count() << std::endl;
     int setNum = 1;
     for (auto it = setsList.begin(); it != setsList.end(); ++it) {
         const ConnectedSet& set = *it;
-        cout << "Set #" << setNum++ << " (size: " << set.size() << "): ";
+        std::cout << "Set #" << setNum++ << " (size: " << set.size() << "): ";
         for (auto point : set.getPoints()) {
-            cout << "(" << point.x << "," << point.y << ") ";
+            std::cout << "(" << point.x << "," << point.y << ") ";
         }
-        cout << endl;
+        std::cout << std::endl;
     }
-    cout << endl;
+    std::cout << std::endl;
 }
 
 int main() {
@@ -22,32 +21,47 @@ int main() {
     
     // Добавляем несколько точек
     setsList.addPoint(Point(0, 0));
-    cout << "After adding (0,0):" << endl;
+    std::cout << "After adding (0,0):" << std::endl;
     printSets(setsList);
     
     setsList.addPoint(Point(1, 0));
-    cout << "After adding (1,0):" << endl;
+    std::cout << "After adding (1,0):" << std::endl;
     printSets(setsList);
     
     setsList.addPoint(Point(3, 3));
-    cout << "After adding (3,3):" << endl;
+    std::cout << "After adding (3,3):" << std::endl;
     printSets(setsList);
     
     setsList.addPoint(Point(2, 0));
-    cout << "After adding (2,0):" << endl;
+    std::cout << "After adding (2,0):" << std::endl;
     printSets(setsList);
     
     setsList.addPoint(Point(3, 2));
-    cout << "After adding (3,2):" << endl;
+    std::cout << "After adding (3,2):" << std::endl;
     printSets(setsList);
     
     setsList.addPoint(Point(3, 4));
-    cout << "After adding (3,4):" << endl;
+    std::cout << "After adding (3,4):" << std::endl;
     printSets(setsList);
     
     setsList.addPoint(Point(4, 3));
-    cout << "After adding (4,3):" << endl;
+    std::cout << "After adding (4,3):" << std::endl;
     printSets(setsList);
-    
+
+    unsigned int numPoints;
+    std::cout << "Enter ammount of points: ";
+    std::cin >> numPoints;
+    while (numPoints){
+        for (size_t i = 0; i < numPoints; ++i){
+            int x, y;
+            std::cout << "Enter points coordinates (x, y): ";
+            std::cin >> x >> y;
+            setsList.addPoint(Point(x, y));
+        }
+        printSets(setsList);
+        std::cout << std::endl;
+        std::cout << "Enter ammount of points: ";
+        std::cin >> numPoints;
+    }
     return 0;
 }

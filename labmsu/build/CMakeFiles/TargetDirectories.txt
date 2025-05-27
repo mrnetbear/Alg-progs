@@ -1,3 +1,3 @@
-/Users/mcsquare/Documents/Alg-progs/labmsu/build/CMakeFiles/labmsu_tests.dir
+/Users/mcsquare/Documents/Alg-progs/labmsu/build/CMakeFiles/labmsu.dir
 /Users/mcsquare/Documents/Alg-progs/labmsu/build/CMakeFiles/edit_cache.dir
 /Users/mcsquare/Documents/Alg-progs/labmsu/build/CMakeFiles/rebuild_cache.dir

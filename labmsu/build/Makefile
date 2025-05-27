@@ -117,24 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named labmsu_tests
+# Target rules for targets named labmsu
 
 # Build rule for target.
-labmsu_tests: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 labmsu_tests
-.PHONY : labmsu_tests
+labmsu: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 labmsu
+.PHONY : labmsu
 
 # fast build rule for target.
-labmsu_tests/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/labmsu_tests.dir/build.make CMakeFiles/labmsu_tests.dir/build
-.PHONY : labmsu_tests/fast
+labmsu/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/labmsu.dir/build.make CMakeFiles/labmsu.dir/build
+.PHONY : labmsu/fast
 
 src/connectedSets.o: src/connectedSets.cpp.o
 .PHONY : src/connectedSets.o
 
 # target to build an object file
 src/connectedSets.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/labmsu_tests.dir/build.make CMakeFiles/labmsu_tests.dir/src/connectedSets.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/labmsu.dir/build.make CMakeFiles/labmsu.dir/src/connectedSets.cpp.o
 .PHONY : src/connectedSets.cpp.o
 
 src/connectedSets.i: src/connectedSets.cpp.i
@@ -142,7 +142,7 @@ src/connectedSets.i: src/connectedSets.cpp.i
 
 # target to preprocess a source file
 src/connectedSets.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/labmsu_tests.dir/build.make CMakeFiles/labmsu_tests.dir/src/connectedSets.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/labmsu.dir/build.make CMakeFiles/labmsu.dir/src/connectedSets.cpp.i
 .PHONY : src/connectedSets.cpp.i
 
 src/connectedSets.s: src/connectedSets.cpp.s
@@ -150,32 +150,32 @@ src/connectedSets.s: src/connectedSets.cpp.s
 
 # target to generate assembly for a file
 src/connectedSets.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/labmsu_tests.dir/build.make CMakeFiles/labmsu_tests.dir/src/connectedSets.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/labmsu.dir/build.make CMakeFiles/labmsu.dir/src/connectedSets.cpp.s
 .PHONY : src/connectedSets.cpp.s
 
-src/tests.o: src/tests.cpp.o
-.PHONY : src/tests.o
+src/labmsu.o: src/labmsu.cpp.o
+.PHONY : src/labmsu.o
 
 # target to build an object file
-src/tests.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/labmsu_tests.dir/build.make CMakeFiles/labmsu_tests.dir/src/tests.cpp.o
-.PHONY : src/tests.cpp.o
+src/labmsu.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/labmsu.dir/build.make CMakeFiles/labmsu.dir/src/labmsu.cpp.o
+.PHONY : src/labmsu.cpp.o
 
-src/tests.i: src/tests.cpp.i
-.PHONY : src/tests.i
+src/labmsu.i: src/labmsu.cpp.i
+.PHONY : src/labmsu.i
 
 # target to preprocess a source file
-src/tests.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/labmsu_tests.dir/build.make CMakeFiles/labmsu_tests.dir/src/tests.cpp.i
-.PHONY : src/tests.cpp.i
+src/labmsu.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/labmsu.dir/build.make CMakeFiles/labmsu.dir/src/labmsu.cpp.i
+.PHONY : src/labmsu.cpp.i
 
-src/tests.s: src/tests.cpp.s
-.PHONY : src/tests.s
+src/labmsu.s: src/labmsu.cpp.s
+.PHONY : src/labmsu.s
 
 # target to generate assembly for a file
-src/tests.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/labmsu_tests.dir/build.make CMakeFiles/labmsu_tests.dir/src/tests.cpp.s
-.PHONY : src/tests.cpp.s
+src/labmsu.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/labmsu.dir/build.make CMakeFiles/labmsu.dir/src/labmsu.cpp.s
+.PHONY : src/labmsu.cpp.s
 
 # Help Target
 help:
@@ -185,13 +185,13 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... labmsu_tests"
+	@echo "... labmsu"
 	@echo "... src/connectedSets.o"
 	@echo "... src/connectedSets.i"
 	@echo "... src/connectedSets.s"
-	@echo "... src/tests.o"
-	@echo "... src/tests.i"
-	@echo "... src/tests.s"
+	@echo "... src/labmsu.o"
+	@echo "... src/labmsu.i"
+	@echo "... src/labmsu.s"
 .PHONY : help
 
 
