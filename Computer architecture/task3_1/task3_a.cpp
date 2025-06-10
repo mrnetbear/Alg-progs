@@ -3,33 +3,45 @@
 #include <queue>
 #include <algorithm>
 
-std::pair<int, int> bfs(const std::vector<std::vector<int>>& graph, int start) {
-    std::vector<int> distance(graph.size(), -1);
-    std::queue<int> q;
-    q.push(start);
-    distance[start] = 0;
-    
-    int farthest_node = start;
-    int max_distance = 0;
-    
-    while (!q.empty()) {
-        int current = q.front();
-        q.pop();
-        
-        for (int neighbor : graph[current]) {
-            if (distance[neighbor] == -1) {
-                distance[neighbor] = distance[current] + 1;
-                q.push(neighbor);
-                
-                if (distance[neighbor] > max_distance) {
-                    max_distance = distance[neighbor];
-                    farthest_node = neighbor;
+int calculateDiameter(const std::vector<std::vector<int>>& edges, int numComputers) {
+    // Создаем список смежности
+    std::vector<std::vector<int>> adj(numComputers);
+    for (const auto& edge : edges) {
+        int u = edge[0];
+        int v = edge[1];
+        adj[u].push_back(v);
+        adj[v].push_back(u); //если подразумевается в этой задаче ориентированность, нужно убрать 
+    }
+
+    int diameter = 0;
+
+    // Для каждого узла выполняем BFS
+    for (int start = 0; start < numComputers; ++start) {
+        std::vector<int> distances(numComputers, -1);
+        std::queue<int> q;
+        q.push(start);
+        distances[start] = 0;
+
+        while (!q.empty()) {
+            int current = q.front();
+            q.pop();
+
+            for (int neighbor : adj[current]) {
+                if (distances[neighbor] == -1) {
+                    distances[neighbor] = distances[current] + 1;
+                    q.push(neighbor);
                 }
             }
         }
+
+        // Находим максимальное расстояние для текущего стартового узла
+        int max_dist = *max_element(distances.begin(), distances.end());
+        if (max_dist > diameter) {
+            diameter = max_dist;
+        }
     }
-    
-    return {farthest_node, max_distance};
+
+    return diameter;
 }
 
 int main() {
@@ -46,27 +58,10 @@ int main() {
         {35, 63}, {12, 13}, {1, 14}, {32, 65}, {98, 75}, {79, 69}, {50, 98}, {45, 73}, {62, 59}
     };
     
-    const int N = 100;
-    std::vector<std::vector<int>> graph(N);
-    
-    for (const auto& edge : connections) {
-        int u = edge[0];
-        int v = edge[1];
-        graph[u].push_back(v);
-        graph[v].push_back(u);
-    }
-    
-    // Первый BFS: находим самую удалённую вершину от 0
-    auto first_bfs = bfs(graph, 0);
-    int farthest_node = first_bfs.first;
-    std::cout << "Farthest node from 0: " << farthest_node << std::endl;
-    std::cout << "Distance to farthest node: " << first_bfs.second << std::endl;
-    
-    // Второй BFS: находим самую удалённую вершину от farthest_node
-    auto second_bfs = bfs(graph, farthest_node);
-    int diameter = second_bfs.second;
-    
-    std::cout << "Diameter of the tree is: " << diameter << std::endl;
+    const int numComputers = 100;
+
+    int diameter = calculateDiameter(connections, numComputers);
+    std::cout << "Diameter of the net is: " << diameter << std::endl;
     
     return 0;
 }

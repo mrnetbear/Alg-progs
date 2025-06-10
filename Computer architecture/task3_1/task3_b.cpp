@@ -4,11 +4,9 @@
 #include <algorithm>
 #include <unordered_map>
 
-using namespace std;
-
-int calculateDiameter(const vector<vector<int>>& edges, int numComputers) {
+int calculateDiameter(const std::vector<std::vector<int>>& edges, int numComputers) {
     // Создаем список смежности
-    vector<vector<int>> adj(numComputers);
+    std::vector<std::vector<int>> adj(numComputers);
     for (const auto& edge : edges) {
         int u = edge[0];
         int v = edge[1];
@@ -20,8 +18,8 @@ int calculateDiameter(const vector<vector<int>>& edges, int numComputers) {
 
     // Для каждого узла выполняем BFS
     for (int start = 0; start < numComputers; ++start) {
-        vector<int> distances(numComputers, -1);
-        queue<int> q;
+        std::vector<int> distances(numComputers, -1);
+        std::queue<int> q;
         q.push(start);
         distances[start] = 0;
 
@@ -48,7 +46,7 @@ int calculateDiameter(const vector<vector<int>>& edges, int numComputers) {
 }
 
 int main() {
-    vector<vector<int>> connections = {
+    std::vector<std::vector<int>> connections = {
         {5, 56}, {35, 72}, {60, 72}, {6, 57}, {3, 66}, {52, 68}, {42, 41}, {50, 28}, {73, 70}, {25, 18}, 
         {21, 15}, {10, 53}, {29, 54}, {63, 59}, {22, 45}, {21, 13}, {69, 46}, {67, 62}, {20, 27}, {14, 44}, 
         {39, 58}, {31, 49}, {40, 45}, {23, 61}, {7, 73}, {44, 62}, {51, 8}, {68, 72}, {59, 8}, {31, 48}, 
@@ -77,7 +75,7 @@ int main() {
     int numComputers = 75;
     int diameter = calculateDiameter(connections, numComputers);
 
-    cout << "Diameter of the tree is: " << diameter << endl;
+    std::cout << "Diameter of the net is: " << diameter << std::endl;
 
     return 0;
 }
