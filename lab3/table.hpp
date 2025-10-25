@@ -103,7 +103,7 @@ public:
 };
 
 class Table {
-private:
+protected:
     KeySpace1* ks1;
     KeySpace2* ks2;
     int msize1;

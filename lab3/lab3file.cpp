@@ -1,6 +1,5 @@
 #include "filetable.hpp"
 #include <iostream>
-#include <cstring>
 #include <limits>
 
 void showMenu() {
@@ -13,12 +12,7 @@ void showMenu() {
     std::cout << "6. Delete by KeySpace1 key\n";
     std::cout << "7. Delete by KeySpace2 key\n";
     std::cout << "8. Search by parent key (KeySpace1)\n";
-    std::cout << "9. Search all versions by KeySpace2 key\n";
-    std::cout << "10. Search specific version by KeySpace2 key\n";
-    std::cout << "11. Delete all versions by KeySpace2 key\n";
-    std::cout << "12. Delete specific version by KeySpace2 key\n";
-    std::cout << "13. Print table\n";
-    std::cout << "14. Save table to file (manual)\n";
+    std::cout << "9. Print table\n";
     std::cout << "0. Exit\n";
     std::cout << "Enter your choice: ";
 }
@@ -36,10 +30,14 @@ int main() {
     int msize1;
     std::cout << "Enter maximum size for KeySpace1: ";
     std::cin >> msize1;
+
+    int msize2;
+    std::cout << "Enter maximum size for KeySpace2: ";
+    std::cin >> msize2;
+    
     clearInputBuffer();
 
-    // Инициализация таблицы с файловой поддержкой
-    FileBackedTable table(filename, msize1);
+    FileBackedTable table(filename, msize1, msize2);
     std::cout << "Table initialized with file: " << filename << "\n";
 
     int choice;
@@ -66,11 +64,10 @@ int main() {
                     std::cout << "Enter second string: ";
                     std::getline(std::cin, str2);
 
-                    InfoType* info = new InfoType(str1, str2);
-                    if (table.addElement(key1, parent, key2, info) == 0) {
+                    if (table.addElement(key1, parent, key2, str1, str2) == 0) {
                         std::cout << "Element added successfully\n";
                     } else {
-                        delete info; // Освобождаем память в случае ошибки
+                        std::cout << "Failed to add element (key may already exist)\n";
                     }
                     break;
                 }
@@ -80,14 +77,14 @@ int main() {
                     unsigned int key2;
 
                     std::cout << "Enter KeySpace1 key: ";
-                    std::cin >> key1;
+                    std::getline(std::cin, key1);
                     std::cout << "Enter KeySpace2 key: ";
                     std::cin >> key2;
                     clearInputBuffer();
 
-                    Item* item = table.searchByCompositeKey(key1, key2);
-                    if (item) {
-                        std::cout << "Found: " << item->getInfo()->printInfo() << "\n";
+                    std::string str1, str2;
+                    if (table.searchByCompositeKey(key1, key2, str1, str2)) {
+                        std::cout << "Found: [" << str1 << ", " << str2 << "]\n";
                     } else {
                         std::cout << "Element not found\n";
                     }
@@ -99,12 +96,12 @@ int main() {
                     unsigned int key2;
 
                     std::cout << "Enter KeySpace1 key: ";
-                    std::cin >> key1;
+                    std::getline(std::cin, key1);
                     std::cout << "Enter KeySpace2 key: ";
                     std::cin >> key2;
                     clearInputBuffer();
 
-                    if (table.deleteByCompositeKey(key1, key2)) {
+                    if (table.deleteByCompositeKey(key1, key2) == 0) {
                         std::cout << "Element deleted successfully\n";
                     } else {
                         std::cout << "Element not found\n";
@@ -113,15 +110,15 @@ int main() {
                 }
 
                 case 4: { // Поиск по ключу KeySpace1
-                    std::string key1;
+                    std::string key;
                     std::cout << "Enter KeySpace1 key: ";
-                    std::getline(std::cin, key1);
+                    std::getline(std::cin, key);
 
-                    auto items = table.searchByKey1(key1);
+                    auto items = table.searchByKey1(key);
                     if (!items.empty()) {
                         std::cout << "Found " << items.size() << " elements:\n";
                         for (const auto& item : items) {
-                            std::cout << "- " << item->getInfo()->printInfo() << "\n";
+                            std::cout << "- [" << item.first << ", " << item.second << "]\n";
                         }
                     } else {
                         std::cout << "No elements found\n";
@@ -130,16 +127,16 @@ int main() {
                 }
 
                 case 5: { // Поиск по ключу KeySpace2
-                    unsigned int key2;
+                    unsigned int key;
                     std::cout << "Enter KeySpace2 key: ";
-                    std::cin >> key2;
+                    std::cin >> key;
                     clearInputBuffer();
 
-                    auto items = table.searchByKey2(key2);
+                    auto items = table.searchByKey2(key);
                     if (!items.empty()) {
                         std::cout << "Found " << items.size() << " elements:\n";
                         for (const auto& item : items) {
-                            std::cout << "- " << item->getInfo()->printInfo() << "\n";
+                            std::cout << "- [" << item.first << ", " << item.second << "]\n";
                         }
                     } else {
                         std::cout << "No elements found\n";
@@ -148,12 +145,12 @@ int main() {
                 }
 
                 case 6: { // Удаление по ключу KeySpace1
-                    std::string key1;
+                    std::string key;
                     std::cout << "Enter KeySpace1 key to delete: ";
-                    std::getline(std::cin, key1);
+                    std::getline(std::cin, key);
 
-                    if (table.deleteByKey1(key1) == 0) {
-                        std::cout << "All elements with key '" << key1 << "' deleted\n";
+                    if (table.deleteByKey1(key) == 0) {
+                        std::cout << "All elements with key '" << key << "' deleted\n";
                     } else {
                         std::cout << "Key not found\n";
                     }
@@ -161,13 +158,13 @@ int main() {
                 }
 
                 case 7: { // Удаление по ключу KeySpace2
-                    unsigned int key2;
+                    unsigned int key;
                     std::cout << "Enter KeySpace2 key to delete: ";
-                    std::cin >> key2;
+                    std::cin >> key;
                     clearInputBuffer();
 
-                    if (table.deleteByKey2(key2) == 0) {
-                        std::cout << "All elements with key " << key2 << " deleted\n";
+                    if (table.deleteByKey2(key) == 0) {
+                        std::cout << "All elements with key " << key << " deleted\n";
                     } else {
                         std::cout << "Key not found\n";
                     }
@@ -183,7 +180,7 @@ int main() {
                     if (!items.empty()) {
                         std::cout << "Found " << items.size() << " child elements:\n";
                         for (const auto& item : items) {
-                            std::cout << "- " << item->getInfo()->printInfo() << "\n";
+                            std::cout << "- [" << item.first << ", " << item.second << "]\n";
                         }
                     } else {
                         std::cout << "No child elements found\n";
@@ -191,83 +188,8 @@ int main() {
                     break;
                 }
 
-                case 9: { // Поиск всех версий по ключу KeySpace2
-                    unsigned int key2;
-                    std::cout << "Enter KeySpace2 key: ";
-                    std::cin >> key2;
-                    clearInputBuffer();
-
-                    auto items = table.searchAllVersionsByKey2(key2);
-                    if (!items.empty()) {
-                        std::cout << "Found " << items.size() << " versions:\n";
-                        for (const auto& item : items) {
-                            std::cout << "- Version " << item->getRelease() << ": " 
-                                     << item->getInfo()->printInfo() << "\n";
-                        }
-                    } else {
-                        std::cout << "No versions found\n";
-                    }
-                    break;
-                }
-
-                case 10: { // Поиск конкретной версии
-                    unsigned int key2;
-                    int release;
-                    std::cout << "Enter KeySpace2 key: ";
-                    std::cin >> key2;
-                    std::cout << "Enter version number: ";
-                    std::cin >> release;
-                    clearInputBuffer();
-
-                    Item* item = table.searchVersionByKey2(key2, release);
-                    if (item) {
-                        std::cout << "Found version " << release << ": " 
-                                 << item->getInfo()->printInfo() << "\n";
-                    } else {
-                        std::cout << "Version not found\n";
-                    }
-                    break;
-                }
-
-                case 11: { // Удаление всех версий
-                    unsigned int key2;
-                    std::cout << "Enter KeySpace2 key: ";
-                    std::cin >> key2;
-                    clearInputBuffer();
-
-                    if (table.deleteAllVersionsByKey2(key2) == 0) {
-                        std::cout << "All versions deleted\n";
-                    } else {
-                        std::cout << "Key not found\n";
-                    }
-                    break;
-                }
-
-                case 12: { // Удаление конкретной версии
-                    unsigned int key2;
-                    int release;
-                    std::cout << "Enter KeySpace2 key: ";
-                    std::cin >> key2;
-                    std::cout << "Enter version number: ";
-                    std::cin >> release;
-                    clearInputBuffer();
-
-                    if (table.deleteVersionByKey2(key2, release) == 0) {
-                        std::cout << "Version " << release << " deleted\n";
-                    } else {
-                        std::cout << "Version not found\n";
-                    }
-                    break;
-                }
-
-                case 13: { // Печать таблицы
+                case 9: { // Печать таблицы
                     table.printTable();
-                    break;
-                }
-
-                case 14: { // Ручное сохранение
-                    table.saveToFile();
-                    std::cout << "Table saved to file\n";
                     break;
                 }
 

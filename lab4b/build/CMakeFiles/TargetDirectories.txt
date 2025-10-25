@@ -1,3 +1,0 @@
-/Users/mcsquare/Documents/Alg-progs/lab4b/build/CMakeFiles/lab4b.dir
-/Users/mcsquare/Documents/Alg-progs/lab4b/build/CMakeFiles/edit_cache.dir
-/Users/mcsquare/Documents/Alg-progs/lab4b/build/CMakeFiles/rebuild_cache.dir

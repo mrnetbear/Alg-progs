@@ -1,4 +1,0 @@
-digraph BSTree {
-  node [shape=record, height=0.1];
-  node140283329134864 [label="<left> | <key> apple (1) | <right> "];
-}
